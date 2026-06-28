@@ -215,6 +215,7 @@ namespace Match3d.Game
                 ? collision.rigidbody.GetComponent<CollectableItem>()
                 : null;
 
+            // Only one item in a collision pair plays audio, otherwise every bump is heard twice.
             if (otherItem == null || otherItem == this || GetInstanceID() > otherItem.GetInstanceID())
             {
                 return;

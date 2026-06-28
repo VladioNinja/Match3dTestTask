@@ -64,6 +64,7 @@ namespace Match3d.Input
             }
 
             _selectedItem.BeginDrag();
+            // Keep the dragged item on a stable horizontal plane so physics objects do not jump toward the camera ray.
             _dragPlane = new Plane(Vector3.up, _selectedItem.transform.position + Vector3.up * _dragHeightOffset);
             _grabOffset = _selectedItem.transform.position - hit.point;
             _targetPosition = _selectedItem.transform.position;
@@ -99,6 +100,7 @@ namespace Match3d.Input
 
             if (_hasTargetPosition)
             {
+                // MovePosition keeps dragging in the physics step, which plays nicer with Rigidbody collisions.
                 _selectedItem.Rigidbody.MovePosition(_targetPosition);
             }
 

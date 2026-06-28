@@ -59,6 +59,7 @@ namespace Match3d.Game
 
         private void HandleItemDropped(CollectableItem item)
         {
+            // Collection is checked on drop, not on trigger enter, so players can pass over the shaft while dragging.
             if (item == null || item.IsCollected || !_itemsInside.Contains(item))
             {
                 return;
