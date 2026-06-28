@@ -8,6 +8,7 @@ namespace Match3d.Game
     public sealed class CollectableItem : MonoBehaviour
     {
         private const string CollidersRootName = "Colliders";
+        private static AudioClip collisionClip;
 
         [SerializeField] private ItemType type = ItemType.Unknown;
         [SerializeField] private Transform visualRoot;
@@ -21,6 +22,9 @@ namespace Match3d.Game
         [SerializeField] private float maxDepenetrationVelocity = 1.6f;
         [SerializeField] private float maxPushedVelocity = 1.75f;
         [SerializeField] private float maxPushedAngularVelocity = 4f;
+        [SerializeField] private float minCollisionImpulseForSound = 0.35f;
+        [SerializeField] private float collisionSoundCooldown = 0.08f;
+        [SerializeField] private float collisionSoundVolume = 0.28f;
         [SerializeField] private bool disableCollisionWhileDragging;
 
         public static event Action<CollectableItem> Dropped;
@@ -33,6 +37,7 @@ namespace Match3d.Game
         public Collider[] Colliders { get; private set; }
         public Transform VisualRoot => visualRoot;
         public AudioSource AudioSource => audioSource;
+        private float nextCollisionSoundTime;
         public PhysicMaterial PhysicsMaterial => physicsMaterial;
         public Bounds CollisionBounds
         {
@@ -84,6 +89,17 @@ namespace Match3d.Game
             if (audioSource == null)
             {
                 audioSource = GetComponent<AudioSource>();
+            }
+
+            if (audioSource != null)
+            {
+                audioSource.playOnAwake = false;
+                audioSource.spatialBlend = 0f;
+            }
+
+            if (collisionClip == null)
+            {
+                collisionClip = CreateCollisionClip();
             }
         }
 
@@ -152,6 +168,7 @@ namespace Match3d.Game
         private void OnCollisionEnter(Collision collision)
         {
             LimitPushedItem(collision);
+            PlayCollisionSound(collision);
         }
 
         private void OnCollisionStay(Collision collision)
@@ -191,6 +208,57 @@ namespace Match3d.Game
 
             otherRigidbody.velocity = Vector3.ClampMagnitude(otherRigidbody.velocity, maxPushedVelocity);
             otherRigidbody.angularVelocity = Vector3.ClampMagnitude(otherRigidbody.angularVelocity, maxPushedAngularVelocity);
+        }
+
+        private void PlayCollisionSound(Collision collision)
+        {
+            if (audioSource == null || collisionClip == null || Time.time < nextCollisionSoundTime)
+            {
+                return;
+            }
+
+            CollectableItem otherItem = collision.rigidbody != null
+                ? collision.rigidbody.GetComponent<CollectableItem>()
+                : null;
+
+            if (otherItem == null || otherItem == this || GetInstanceID() > otherItem.GetInstanceID())
+            {
+                return;
+            }
+
+            float impulse = collision.impulse.magnitude;
+
+            if (impulse < minCollisionImpulseForSound)
+            {
+                return;
+            }
+
+            float normalizedImpulse = Mathf.InverseLerp(minCollisionImpulseForSound, minCollisionImpulseForSound * 5f, impulse);
+            audioSource.pitch = UnityEngine.Random.Range(0.92f, 1.08f);
+            audioSource.PlayOneShot(collisionClip, Mathf.Lerp(collisionSoundVolume * 0.45f, collisionSoundVolume, normalizedImpulse));
+            nextCollisionSoundTime = Time.time + collisionSoundCooldown;
+        }
+
+        private static AudioClip CreateCollisionClip()
+        {
+            const int sampleRate = 44100;
+            const float duration = 0.08f;
+            int sampleCount = Mathf.CeilToInt(sampleRate * duration);
+            float[] samples = new float[sampleCount];
+
+            for (int i = 0; i < sampleCount; i++)
+            {
+                float t = i / (float)sampleRate;
+                float normalized = t / duration;
+                float envelope = Mathf.Exp(-normalized * 12f);
+                float body = Mathf.Sin(2f * Mathf.PI * 320f * t);
+                float tick = Mathf.Sin(2f * Mathf.PI * 1450f * t) * Mathf.Exp(-normalized * 28f);
+                samples[i] = (body * 0.45f + tick * 0.55f) * envelope * 0.55f;
+            }
+
+            AudioClip clip = AudioClip.Create("ItemCollisionClick", sampleCount, 1, sampleRate, false);
+            clip.SetData(samples, 0);
+            return clip;
         }
 
         private void ApplyColliderTuning()

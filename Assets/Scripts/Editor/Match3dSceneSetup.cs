@@ -524,6 +524,9 @@ namespace Match3d.EditorTools
             itemObject.FindProperty("maxDepenetrationVelocity").floatValue = 1.6f;
             itemObject.FindProperty("maxPushedVelocity").floatValue = 1.75f;
             itemObject.FindProperty("maxPushedAngularVelocity").floatValue = 4f;
+            itemObject.FindProperty("minCollisionImpulseForSound").floatValue = 0.35f;
+            itemObject.FindProperty("collisionSoundCooldown").floatValue = 0.08f;
+            itemObject.FindProperty("collisionSoundVolume").floatValue = 0.28f;
             itemObject.FindProperty("disableCollisionWhileDragging").boolValue = false;
             itemObject.ApplyModifiedPropertiesWithoutUndo();
 

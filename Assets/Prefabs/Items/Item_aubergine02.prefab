@@ -183,6 +183,9 @@ MonoBehaviour:
   maxDepenetrationVelocity: 1.6
   maxPushedVelocity: 1.75
   maxPushedAngularVelocity: 4
+  minCollisionImpulseForSound: 0.35
+  collisionSoundCooldown: 0.08
+  collisionSoundVolume: 0.28
   disableCollisionWhileDragging: 0
 --- !u!1 &2344677029431905179
 GameObject:
