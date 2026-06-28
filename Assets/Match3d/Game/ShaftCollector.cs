@@ -6,11 +6,11 @@ namespace Match3d.Game
     [RequireComponent(typeof(Collider))]
     public sealed class ShaftCollector : MonoBehaviour
     {
-        [SerializeField] private Transform collectedItemsRoot;
-        [SerializeField] private CollectFeedbackController collectFeedback;
-        [SerializeField] private bool hideCollectedItems = true;
+        [SerializeField] private Transform _collectedItemsRoot;
+        [SerializeField] private CollectFeedbackController _collectFeedback;
+        [SerializeField] private bool _hideCollectedItems = true;
 
-        private readonly HashSet<CollectableItem> itemsInside = new HashSet<CollectableItem>();
+        private readonly HashSet<CollectableItem> _itemsInside = new HashSet<CollectableItem>();
 
         private void OnEnable()
         {
@@ -20,12 +20,12 @@ namespace Match3d.Game
         private void OnDisable()
         {
             CollectableItem.Dropped -= HandleItemDropped;
-            itemsInside.Clear();
+            _itemsInside.Clear();
         }
 
         private void Reset()
         {
-            Collider triggerCollider = GetComponent<Collider>();
+            var triggerCollider = GetComponent<Collider>();
             triggerCollider.isTrigger = true;
         }
 
@@ -36,29 +36,30 @@ namespace Match3d.Game
 
         private void OnTriggerExit(Collider other)
         {
-            CollectableItem item = other.GetComponentInParent<CollectableItem>();
+            var item = other.GetComponentInParent<CollectableItem>();
 
             if (item != null)
             {
-                itemsInside.Remove(item);
+                _itemsInside.Remove(item);
             }
         }
 
-        private void TrackItem(Collider other)
+        private CollectableItem TrackItem(Collider other)
         {
-            CollectableItem item = other.GetComponentInParent<CollectableItem>();
+            var item = other.GetComponentInParent<CollectableItem>();
 
             if (item == null || item.IsCollected)
             {
-                return;
+                return null;
             }
 
-            itemsInside.Add(item);
+            _itemsInside.Add(item);
+            return item;
         }
 
         private void HandleItemDropped(CollectableItem item)
         {
-            if (item == null || item.IsCollected || !itemsInside.Contains(item))
+            if (item == null || item.IsCollected || !_itemsInside.Contains(item))
             {
                 return;
             }
@@ -68,21 +69,21 @@ namespace Match3d.Game
 
         private void Collect(CollectableItem item)
         {
-            itemsInside.Remove(item);
-            Vector3 collectPosition = item.transform.position;
+            _itemsInside.Remove(item);
+            var collectPosition = item.transform.position;
             item.MarkCollected();
 
-            if (collectFeedback != null)
+            if (_collectFeedback != null)
             {
-                collectFeedback.Play(collectPosition);
+                _collectFeedback.Play(collectPosition);
             }
 
-            if (collectedItemsRoot != null)
+            if (_collectedItemsRoot != null)
             {
-                item.transform.SetParent(collectedItemsRoot, true);
+                item.transform.SetParent(_collectedItemsRoot, true);
             }
 
-            if (hideCollectedItems)
+            if (_hideCollectedItems)
             {
                 item.gameObject.SetActive(false);
             }

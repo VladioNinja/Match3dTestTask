@@ -290,22 +290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8257a91a865d24d9911c427b638e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 19
-  visualRoot: {fileID: 3376312562783979980}
-  audioSource: {fileID: 7669765375782901927}
-  physicsMaterial: {fileID: 13400000, guid: 25af97b9f74dd30498bbc341c2815448, type: 2}
-  mass: 1.15
-  linearDrag: 4
-  angularDrag: 8
-  maxDropVelocity: 1.4
-  maxDropAngularVelocity: 4
-  maxDepenetrationVelocity: 1.6
-  maxPushedVelocity: 1.75
-  maxPushedAngularVelocity: 4
-  minCollisionImpulseForSound: 0.35
-  collisionSoundCooldown: 0.08
-  collisionSoundVolume: 0.28
-  disableCollisionWhileDragging: 0
+  _type: 19
+  _visualRoot: {fileID: 3376312562783979980}
+  _audioSource: {fileID: 7669765375782901927}
+  _settings: {fileID: 11400000, guid: 5c6090d2710d4dfba028f3442457629f, type: 2}
 --- !u!1 &7561485117904335691
 GameObject:
   m_ObjectHideFlags: 0

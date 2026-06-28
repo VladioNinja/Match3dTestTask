@@ -319,8 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db42851417ad274bad6b2354ca533b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 10, y: 3, z: 10}
-  drawGizmo: 1
+  _size: {x: 10, y: 3, z: 10}
+  _drawGizmo: 1
 --- !u!4 &380230371
 Transform:
   m_ObjectHideFlags: 0
@@ -419,15 +419,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41037cac67b070148ae1c7d9928e52da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1003339688}
-  worldCamera: {fileID: 963194227}
-  starCounterTarget: {fileID: 824722924}
-  audioSource: {fileID: 644957886}
-  starColor: {r: 1, g: 0.82, b: 0.12, a: 1}
-  flightDuration: 0.55
-  startSize: 64
-  endSize: 26
-  playAudio: 1
+  _canvas: {fileID: 1003339688}
+  _worldCamera: {fileID: 963194227}
+  _starCounterTarget: {fileID: 824722924}
+  _audioSource: {fileID: 644957886}
+  _starColor: {r: 1, g: 0.82, b: 0.12, a: 1}
+  _flightDuration: 0.55
+  _startSize: 64
+  _endSize: 26
+  _playAudio: 1
+  _collectClip: {fileID: 8300000, guid: a7d9191d2f9181a4d8ef742390ce8e02, type: 3}
+  _starSprite: {fileID: 21300000, guid: 9e3a2bcbadf94a7a8a6a3a56d7b4fd3c, type: 3}
+  _poolPrewarmCount: 4
 --- !u!82 &644957886
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1259,12 +1262,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81a8d50daddbdf478ac8e3494301991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnManager: {fileID: 1432931280}
-  counterLabel: {fileID: 824722925}
-  timerLabel: {fileID: 1741618722}
-  gameOverPanel: {fileID: 2085160725}
-  gameOverLabel: {fileID: 1408732605}
-  restartButton: {fileID: 907908702}
+  _spawnManager: {fileID: 1432931280}
+  _counterLabel: {fileID: 824722925}
+  _timerLabel: {fileID: 1741618722}
+  _gameOverPanel: {fileID: 2085160725}
+  _gameOverLabel: {fileID: 1408732605}
+  _restartButton: {fileID: 907908702}
 --- !u!4 &1077764465
 Transform:
   m_ObjectHideFlags: 0
@@ -1548,7 +1551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d06d515f46df3243aaa41ed23492cae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefabs:
+  _itemPrefabs:
   - {fileID: 1027118886060644913, guid: dd1f42346b74ee14f9dac9a244ba0666, type: 3}
   - {fileID: 6162629526081521733, guid: 6b78189f17a80ae4291528e6e0a79ee1, type: 3}
   - {fileID: 8457742015840890081, guid: e844610bd6f73564cbf935224ab807ba, type: 3}
@@ -1561,10 +1564,10 @@ MonoBehaviour:
   - {fileID: 4021527378145155159, guid: c6943d7caab2b414dbe74cc9f4c8c3ac, type: 3}
   - {fileID: 2609463605413534824, guid: 9baaedefb9859e340876be1f821549a2, type: 3}
   - {fileID: 792956358803291838, guid: aa14a3216233b204fa69e589c4eac7b3, type: 3}
-  spawnArea: {fileID: 380230370}
-  itemsRoot: {fileID: 949779977}
-  gameSession: {fileID: 1077764464}
-  itemCount: 12
+  _spawnArea: {fileID: 380230370}
+  _itemsRoot: {fileID: 949779977}
+  _gameSession: {fileID: 1077764464}
+  _itemCount: 12
 --- !u!1 &1442636662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,9 +2079,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a41c8532fb9bd3479a590c7d7479f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectedItemsRoot: {fileID: 725218415}
-  collectFeedback: {fileID: 644957885}
-  hideCollectedItems: 1
+  _collectedItemsRoot: {fileID: 725218415}
+  _collectFeedback: {fileID: 644957885}
+  _hideCollectedItems: 1
 --- !u!23 &1788369220
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2196,12 +2199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18fbc813ea6c4334db689c9daf71fdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCamera: {fileID: 963194227}
-  itemLayerMask:
+  _targetCamera: {fileID: 963194227}
+  _itemLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  dragBounds: {fileID: 380230370}
-  dragHeightOffset: 0.2
+  _dragBounds: {fileID: 380230370}
+  _dragHeightOffset: 0.2
 --- !u!1 &2085160725
 GameObject:
   m_ObjectHideFlags: 0
