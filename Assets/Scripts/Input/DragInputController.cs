@@ -97,12 +97,12 @@ namespace Match3d.Input
 
         private Vector3 ClampToDragBounds(Vector3 targetPosition)
         {
-            if (dragBounds == null || selectedItem == null || selectedItem.Collider == null)
+            if (dragBounds == null || selectedItem == null)
             {
                 return targetPosition;
             }
 
-            Bounds itemBounds = selectedItem.Collider.bounds;
+            Bounds itemBounds = selectedItem.CollisionBounds;
             Vector3 center = dragBounds.transform.position;
             Vector3 halfSize = dragBounds.Size * 0.5f;
             Vector3 extents = itemBounds.extents;
